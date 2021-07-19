@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conditional Assess</title>
+</head>
+<body>
+    <div>
+        <select name="machineState" id="machineState">
+            <option value="on">Machine ON</option>
+            <option value="off">machine OFF</option>
+        </select>
+    </div>
+    <div>
+        <input type="text" name="score" id="score">
+    </div>
+    <div>
+        <input type="password" name="pwd" id="pwd">
+        <button id="processing">Processing result</button>
+    </div>
+    <div>
+        <p id="machineResult"></p>
+        <p id="pwdResult"></p>
+        <p id="scoreResult"></p>
+    </div>
+
+    <script>
+        'use strict';
+        const select = document.querySelector('#machineState');
+        const score = document.querySelector('#score');
+        const pwd = document.querySelector('#pwd');
+
+        const para1 = document.querySelector('#machineResult');
+        const para2 = document.querySelector('#pwdResult');
+        const para3 = document.querySelector('#scoreResult');
+
+        let machineResult = '';
+        let pwdResult = '';
+        let scoreResult = '';
+
+        document.querySelector('#processing').addEventListener('click', update);
+
+        function update()
+        {
+            let scoreValue = Number(score.value);
+            if (select.value === 'off')
+            {
+                machineResult = 'The mechine is Off. Turn On the machine, please.';
+            }
+            else
+            {
+                machineResult = 'The mechine is On. We will proceesing the information.';
+
+                if (pwd.value==='password')
+                {
+                    pwdResult = 'Logged in successfully!';
+                    //console.log('scoreValue: ' + scoreValue + '| ' + score);
+                    if (scoreValue)
+                    {
+                        /*
+                        Score of less than 0 or more than 100 — "This is not possible, an error has occurred."
+                        Score of 0 to 19 — "That was a terrible score — total fail!"
+                        Score of 20 to 39 — "You know some things, but it\'s a pretty bad score. Needs improvement."
+                        Score of 40 to 69 — "You did a passable job, not bad!"
+                        Score of 70 to 89 — "That\'s a great score, you really know your stuff."
+                        Score of 90 to 100 — "What an amazing score! Did you cheat? Are you for real?"
+                        */
+
+                        if (scoreValue<0 || scoreValue>100)
+                        {
+                            scoreResult = 'This is not possible, an error has occurred.';
+                        }
+                        else if (scoreValue>=0 && scoreValue<=19)
+                        {
+                            scoreResult = 'That was a terrible score — total fail!';
+                        }
+                        else if (scoreValue>=20 && scoreValue<=39)
+                        {
+                            scoreResult = 'You know some things, but it\'s a pretty bad score. Needs improvement.';
+                        }
+                        else if (scoreValue>=40 && scoreValue<=69)
+                        {
+                            scoreResult = 'You did a passable job, not bad!';
+                        }
+                        else if (scoreValue>=70 && scoreValue<=89)
+                        {
+                            scoreResult = 'That\'s a great score, you really know your stuff.';
+                        }
+                        else if (scoreValue>=90)
+                        {
+                            scoreResult = 'What an amazing score! Did you cheat? Are you for real?';
+                        }
+                    }
+                    else
+                    {
+                        scoreResult = 'Score, Failed! Introduce a value between 0 to 100';
+                    }
+                }
+                else
+                {
+                    pwdResult = 'Logged in failed! We can not continue.';
+                }
+            }
+
+            para1.textContent = machineResult;
+            para2.textContent = pwdResult;
+            para3.textContent = scoreResult;
+        }
+    </script>
+</body>
+</html>
